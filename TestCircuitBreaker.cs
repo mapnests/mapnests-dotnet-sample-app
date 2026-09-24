@@ -65,7 +65,7 @@ namespace MapNests.DotNet.SampleApp
                     Sources = [new SourcePoint { Id = 1, Lat = 23.79, Lon = 90.43, Mode = RouteMode.Car }],
                     Destination = new DestinationPoint { Lat = 23.80, Lon = 90.44 }
                 };
-                var response = await client.RouteMap.V1.MultiSourceSummaryAsync(request);
+                var response = await client.RouteMap.MultiSourceSummaryAsync(request);
                 _logger?.LogInformation("  RouteMap call: {Status}", string.IsNullOrEmpty(response) ? "Empty" : "OK");
                 _logger?.LogInformation("  ✓ Circuit breaker configured successfully");
             }//try
@@ -130,7 +130,7 @@ namespace MapNests.DotNet.SampleApp
                 // First call - will throw
                 try
                 {
-                    await client.RouteMap.V1.MultiSourceSummaryAsync(req);
+                    await client.RouteMap.MultiSourceSummaryAsync(req);
                 }//try
                 catch (HttpRequestException)
                 {
@@ -140,7 +140,7 @@ namespace MapNests.DotNet.SampleApp
                 // Second call - will throw, circuit opens
                 try
                 {
-                    await client.RouteMap.V1.MultiSourceSummaryAsync(req);
+                    await client.RouteMap.MultiSourceSummaryAsync(req);
                 }//try
                 catch (HttpRequestException)
                 {
@@ -150,7 +150,7 @@ namespace MapNests.DotNet.SampleApp
                 // Third call - circuit should be open, CircuitBreakerOpenException thrown
                 try
                 {
-                    await client.RouteMap.V1.MultiSourceSummaryAsync(req);
+                    await client.RouteMap.MultiSourceSummaryAsync(req);
                     _logger?.LogWarning("  Call 3: Unexpected success (circuit may not have opened)");
                 }//try
                 catch (CircuitBreakerOpenException ex)

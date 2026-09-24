@@ -9,7 +9,7 @@
 
   <ItemGroup>
     
-    <PackageReference Include="MapNests" Version="1.1.0" />
+    <PackageReference Include="MapNests" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.2" />

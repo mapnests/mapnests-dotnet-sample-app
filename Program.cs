@@ -21,35 +21,35 @@ namespace MapNests.DotNet.SampleApp
             logger.LogInformation("============================\n");
 
             // Initialize all test classes with logger
-            TestRouteMapV1.SetLogger(logger);
-            TestGeoMapV1.SetLogger(logger);
-            TestGeoMapV2.SetLogger(logger);
+            TestRouteMap.SetLogger(logger);
+            TestGeoMap.SetLogger(logger);
+            TestEta.SetLogger(logger);
             TestBuilderPattern.SetLogger(logger);
             TestManualInstantiation.SetLogger(logger);
             TestDependencyInjection.SetLogger(logger);
             TestRetry.SetLogger(logger);
             TestCircuitBreaker.SetLogger(logger);
 
-            // // Run all API tests
-            // logger.LogInformation("\n=== Running All API Tests ===");
+            // Run all API tests
+            logger.LogInformation("\n=== Running All API Tests ===");
 
-            // logger.LogInformation("\n=== Test: Retry Policy ===");
-            // await TestRetry.RunTest();
+            logger.LogInformation("\n=== Test: Retry Policy ===");
+            await TestRetry.RunTest();
 
-            // logger.LogInformation("\n=== Test: Circuit Breaker ===");
-            // await TestCircuitBreaker.RunTest();
+            logger.LogInformation("\n=== Test: Circuit Breaker ===");
+            await TestCircuitBreaker.RunTest();
 
-            // logger.LogInformation("\n=== Test: Dependency Injection ===");
-            // await TestDependencyInjection.RunTest();
+            logger.LogInformation("\n=== Test: Dependency Injection ===");
+            await TestDependencyInjection.RunTest();
 
-            // logger.LogInformation("\n=== Test: RouteMap V1 API ===");
-            // await TestRouteMapV1.RunTest();
+            logger.LogInformation("\n=== Test: RouteMap API ===");
+            await TestRouteMap.RunTest();
 
-            // logger.LogInformation("\n=== Test: GeoMap V1 API ===");
-            // await TestGeoMapV1.RunTest();
+            logger.LogInformation("\n=== Test: GeoMap API ===");
+            await TestGeoMap.RunTest();
 
-            logger.LogInformation("\n=== Test: GeoMap V2 API ===");
-            await TestGeoMapV2.RunTest();
+            logger.LogInformation("\n=== Test: Eta API ===");
+            await TestEta.RunTest();
 
             logger.LogInformation("\nTest completed!");
         }//mthd

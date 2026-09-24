@@ -10,8 +10,8 @@ namespace MapNests.DotNet.SampleApp
     /// </summary>
     internal static class TestConfig
     {
-        private const string DefaultApiKey = "your-api-key-here";
-        private const string DefaultOrigin = "https://myapp.com";
+        private const string DefaultApiKey = "3Lldiceu7dHeubYt9e8nV7rjK4S8cUYsubUP-Iq9uF5G1LebKPPxwX586WbA8JW4BOBu7RpaKDPUhIZAPokWdA";
+        private const string DefaultOrigin = "https://cms.foodibd.com/";
 
         public static string ApiKey { get; } = Load("ApiKey", DefaultApiKey);
         public static string Origin { get; } = Load("Origin", DefaultOrigin);

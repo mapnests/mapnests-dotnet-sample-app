@@ -65,7 +65,7 @@ namespace MapNests.DotNet.SampleApp
                     Sources = [new SourcePoint { Id = 1, Lat = 23.79, Lon = 90.43, Mode = RouteMode.Car }],
                     Destination = new DestinationPoint { Lat = 23.80, Lon = 90.44 }
                 };
-                var response = await client.RouteMap.V1.MultiSourceSummaryAsync(request);
+                var response = await client.RouteMap.MultiSourceSummaryAsync(request);
                 _logger?.LogInformation("  RouteMap call: {Status}", string.IsNullOrEmpty(response) ? "Empty" : "OK");
                 _logger?.LogInformation("  ✓ Retry policy configured successfully");
             }//try
@@ -119,7 +119,7 @@ namespace MapNests.DotNet.SampleApp
                     Sources = [new SourcePoint { Id = 1, Lat = 23.79, Lon = 90.43, Mode = RouteMode.Car }],
                     Destination = new DestinationPoint { Lat = 23.80, Lon = 90.44 }
                 };
-                var result = await client.RouteMap.V1.MultiSourceSummaryAsync(req);
+                var result = await client.RouteMap.MultiSourceSummaryAsync(req);
                 _logger?.LogInformation("  Total requests made (including retries): {Count}", callCount);
                 _logger?.LogInformation("  Request result: {Status}", string.IsNullOrEmpty(result) ? "Empty" : "OK");
 
