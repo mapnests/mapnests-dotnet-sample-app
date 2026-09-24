@@ -319,3 +319,39 @@ This project is licensed under the MIT License.
 ## Versioning
 
 This project follows [Semantic Versioning](https://semver.org/) (SemVer).
+## [2.0.0] - 2026-09-23
+
+### Removed
+- **BREAKING**: `IGeoMapClient.V1` and `IGeoMapClient.V2` properties removed.
+- **BREAKING**: `IRouteMapClient.V1` and `IRouteMapClient.V2` properties removed.
+- **BREAKING**: `IGeoMapClientV1`, `IGeoMapClientV2`, `IRouteMapClientV1`, `IRouteMapClientV2` interfaces removed.
+
+- **BREAKING**: `GeoMap.SearchAsync(SearchV1Request)` and `GeoMap.ReverseAsync(ReverseV1Request)` V1 overloads removed — `SearchAsync`/`ReverseAsync` are V2-only now (`DetailsAsync`/`GeocodeAsync` remain the SDK's only V1 surface). `SearchV1Request` and `ReverseV1Request` DTOs removed.
+- **BREAKING**: `GeoMap.ReverseGeocodeAsync` removed entirely (both overloads). `ReverseGeocodeRequest` DTO removed. Use `ReverseAsync(ReverseRequest)` instead.
+
+### Added
+- **Eta Client**: New `IEtaClient`, exposed as `client.Eta`, backed by its own dedicated backend service
+  - `EtaWithoutGeometryByModeAsync(EtaWithoutGeometryByModeRequest)`, `EtaWithGeometryByModeAsync(EtaWithGeometryByModeRequest)`, `EtaWithoutStoppageAsync(EtaWithoutStoppageRequest)`, `EtaMultiStoppageAsync(EtaMultiStoppageRequest)`
+  - New `EtaTravelMode` enum (`Car`, `Motorcycle`, `Cng`)
+- **RouteMap.MultiSourceSummaryWithoutGeometryAsync**: Same result as `MultiSourceSummaryAsync`, without route geometry in the response
+  - New standalone `MultiSourceSummaryWithoutGeometryRequest` DTO
+- **RouteMap.PairwiseDistanceMatrixAsync**: Batch distance/ETA between origin/destination pairs, sortable by distance or ETA
+  - New `PairwiseDistanceMatrixRequest` DTO and `SortOption` enum
+- **Client-Side Request Validation**: Every method now validates its request before making a network call, unconditionally
+  - New `RequestValidationException` (extends `ApiException`), thrown on the first validation failure — required fields, and coordinates outside Bangladesh (`20.5°–26.7°` latitude, `87.9°–92.8°` longitude)
+- **RouteMode**: Extended with `Motorcycle` and `Cng` (existing ordinals unchanged)
+- **AcceptLanguages**: Converted from string constants to a public enum with a `GetValue()` extension method (`AcceptLanguages.En.GetValue()`); `AcceptLanguage` request properties remain `string?`, so existing call sites are unaffected
+
+### Changed
+- **BREAKING**: All GeoMap and RouteMap methods now live directly on `IGeoMapClient` / `IRouteMapClient`. Callers drop the `.V1` / `.V2` segment: `client.GeoMap.V2.SearchRadiusAsync(...)` → `client.GeoMap.SearchRadiusAsync(...)`.
+- GeoMap, RouteMap, and the new ETA client now route to independent backend services internally instead of sharing a single host — transparent to callers, no API changes.
+- `GeoMap.ReverseAsync`'s response no longer duplicates `lat`/`lon` in the response data (already available on the request).
+
+### Migration
+- `client.GeoMap.V1.<Method>(...)` → `client.GeoMap.<Method>(...)` (unchanged request type; overload resolution keeps V1 callers on the V1 endpoint).
+- `client.GeoMap.V2.<Method>(...)` → `client.GeoMap.<Method>(...)`.
+- `client.RouteMap.V1.<Method>(...)` → `client.RouteMap.<Method>(...)`.
+- `client.RouteMap.V2.PairwiseSummaryAsync(...)` → `client.RouteMap.PairwiseSummaryAsync(...)`.
+- `client.RouteMap.V1.PairwiseSummaryAsync(...)` → `client.RouteMap.PairwiseSummaryV1Async(...)`.
+- `client.GeoMap.SearchAsync(new SearchV1Request { ... })` / `client.GeoMap.ReverseAsync(new ReverseV1Request { ... })` no longer exist — use `SearchRequest`/`ReverseRequest` instead (method names unchanged).
+- `client.GeoMap.ReverseGeocodeAsync(...)` was removed entirely. Use `ReverseAsync(new ReverseRequest { ... })` instead.
